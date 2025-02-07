@@ -73,11 +73,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserResponse searchUserByUsername(String userName) {
+    public User searchUserByUsername(String userName) {
         final Optional<User> optionUser = userRepository.findByUsername(userName);
         if(optionUser.isPresent()){
             log.info("User found with the username : {}",userName);
-            return Utilities.convertToUserResponse(optionUser.get());
+            return optionUser.get();
         } else {
             log.info("User not found with the username : {}",userName);
             throw new UserException("User not found with the username : "+userName);

@@ -8,5 +8,5 @@ public interface UserService {
     UserResponse saveUser(UserRequest request);
     User findUserById(String id);
     UserResponse updateUser(String userId, UserRequest userRequest);
-    UserResponse searchUserByUsername(String userName);
+    User searchUserByUsername(String userName);
 }
