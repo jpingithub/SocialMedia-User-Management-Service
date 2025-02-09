@@ -6,9 +6,9 @@ import com.rb.user.entity.User;
 import com.rb.user.service.UserService;
 import com.rb.user.util.Utilities;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> saveUser(@RequestBody UserRequest userRequest){
@@ -25,7 +26,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable("id") String id){
-        return new ResponseEntity<>(Utilities.convertToUserResponse(userService.findUserById(id)), HttpStatus.FOUND);
+        return new ResponseEntity<>(Utilities.convertToUserResponse(userService.findUserById(id)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -40,7 +41,7 @@ public class UserController {
 
     @GetMapping("/login")
     public ResponseEntity<User> getUserByUsernameForLogin(@RequestParam("username") String username){
-         return new ResponseEntity<>(userService.searchUserByUsername(username),HttpStatus.FOUND);
+        return new ResponseEntity<>(userService.searchUserByUsername(username),HttpStatus.OK);
     }
 
 }
