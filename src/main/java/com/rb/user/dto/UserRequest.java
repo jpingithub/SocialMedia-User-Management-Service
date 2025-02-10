@@ -9,5 +9,7 @@ public class UserRequest {
     private String lastName;
     private String username;
     private String password;
+    private String email;
+    private Boolean isEmailVerified;
 
 }
