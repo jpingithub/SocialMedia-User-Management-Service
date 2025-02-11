@@ -22,5 +22,14 @@ public class GlobalExceptionHandler {
         exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(NoUserFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleNoUserFoundException(NoUserFoundException ex, WebRequest request){
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setMessage(ex.getMessage());
+        exceptionResponse.setPath(request.getDescription(false));
+        exceptionResponse.setTimeStamp(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()));
+        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NO_CONTENT);
+    }
 
 }

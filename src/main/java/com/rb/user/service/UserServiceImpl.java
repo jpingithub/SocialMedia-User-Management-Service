@@ -6,6 +6,7 @@ import com.rb.user.dto.OTP;
 import com.rb.user.dto.UserRequest;
 import com.rb.user.dto.UserResponse;
 import com.rb.user.entity.User;
+import com.rb.user.exception.NoUserFoundException;
 import com.rb.user.exception.UserException;
 import com.rb.user.repo.OtpRepository;
 import com.rb.user.repo.UserRepository;
@@ -94,7 +95,7 @@ public class UserServiceImpl implements UserService {
             return optionUser.get();
         } else {
             log.info("User not found with the username : {}", userName);
-            throw new UserException("User not found with the username : " + userName);
+            throw new NoUserFoundException("User not found with the username : " + userName);
         }
     }
 

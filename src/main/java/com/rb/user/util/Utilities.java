@@ -15,6 +15,7 @@ public class Utilities {
         userResponse.setId(user.getId());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
+        userResponse.setEmail(user.getEmail());
         return userResponse;
     }
 
