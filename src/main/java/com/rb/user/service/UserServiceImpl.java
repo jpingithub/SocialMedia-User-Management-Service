@@ -2,9 +2,9 @@ package com.rb.user.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rb.user.client.NotificationClient;
-import com.rb.user.dto.OTP;
 import com.rb.user.dto.UserRequest;
 import com.rb.user.dto.UserResponse;
+import com.rb.user.entity.OTP;
 import com.rb.user.entity.User;
 import com.rb.user.exception.NoUserFoundException;
 import com.rb.user.exception.UserException;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse saveUser(UserRequest request) {
-        if(request.getIsEmailVerified()){
+        if (request.getIsEmailVerified()) {
             final User user = objectMapper.convertValue(request, User.class);
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             if (isAvailable(request.getUsername())) {
@@ -46,27 +46,27 @@ public class UserServiceImpl implements UserService {
                 log.info("User name already exist : {}", request.getUsername());
                 throw new UserException("Username already exist.");
             }
-        }else{
-            log.info("Email not verified : {}",request.getEmail());
+        } else {
+            log.info("Email not verified : {}", request.getEmail());
             throw new UserException("Please verify the email ");
         }
     }
 
     @Override
-    public User findUserById(String id) {
-        final Optional<User> optionalUserFromDB = userRepository.findById(id);
+    public User findByUserName(String username) {
+        final Optional<User> optionalUserFromDB = userRepository.findByUsername(username);
         if (optionalUserFromDB.isPresent()) {
-            log.info("User found with the id : {}", id);
+            log.info("User found with the user name : {}", username);
             return optionalUserFromDB.get();
         } else {
-            log.info("No user found with the id : {}", id);
-            throw new UserException("User not found with the id : " + id);
+            log.info("No user found with the user name : {}", username);
+            throw new UserException("User not found with the user name : " + username);
         }
     }
 
     @Override
-    public UserResponse updateUser(String userId, UserRequest userRequest) {
-        final User userById = findUserById(userId);
+    public UserResponse updateUser(String userName, UserRequest userRequest) {
+        final User userById = findByUserName(userName);
         if (userRequest.getFirstName() != null && !userRequest.getFirstName().equals(userById.getFirstName()))
             userById.setFirstName(userRequest.getFirstName());
         if (userRequest.getLastName() != null && !userRequest.getLastName().equals(userById.getLastName()))

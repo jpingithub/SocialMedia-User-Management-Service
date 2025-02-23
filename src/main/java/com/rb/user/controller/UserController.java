@@ -1,12 +1,13 @@
 package com.rb.user.controller;
 
-import com.rb.user.dto.OTP;
+import com.rb.user.entity.OTP;
 import com.rb.user.dto.UserRequest;
 import com.rb.user.dto.UserResponse;
 import com.rb.user.entity.User;
 import com.rb.user.service.UserService;
 import com.rb.user.util.Utilities;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +34,9 @@ public class UserController {
         return new ResponseEntity<>(userService.validateOtp(email,otp),HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") String id){
-        return new ResponseEntity<>(Utilities.convertToUserResponse(userService.findUserById(id)), HttpStatus.OK);
+    @GetMapping("current/details")
+    public ResponseEntity<UserResponse> getUserById(@RequestHeader("${customized-header-for-token}") String loggedInUsername){
+        return new ResponseEntity<>(Utilities.convertToUserResponse(userService.findByUserName(loggedInUsername)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
