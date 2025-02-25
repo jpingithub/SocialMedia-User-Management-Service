@@ -66,25 +66,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(String userName, UserRequest userRequest) {
-        final User userById = findByUserName(userName);
-        if (userRequest.getFirstName() != null && !userRequest.getFirstName().equals(userById.getFirstName()))
-            userById.setFirstName(userRequest.getFirstName());
-        if (userRequest.getLastName() != null && !userRequest.getLastName().equals(userById.getLastName()))
-            userById.setLastName(userRequest.getLastName());
+        final User byUserName = findByUserName(userName);
+        if (userRequest.getFirstName() != null && !userRequest.getFirstName().equals(byUserName.getFirstName()))
+            byUserName.setFirstName(userRequest.getFirstName());
+        if (userRequest.getLastName() != null && !userRequest.getLastName().equals(byUserName.getLastName()))
+            byUserName.setLastName(userRequest.getLastName());
         if (userRequest.getUsername() != null) {
             log.info("checking new username availability : {}", userRequest.getUsername());
-            if (!userRequest.getUsername().equals(userById.getUsername())) {
+            if (!userRequest.getUsername().equals(byUserName.getUsername())) {
                 if (isAvailable(userRequest.getUsername())) {
                     log.info("Username available to update : {}", userRequest.getUsername());
-                    userById.setUsername(userRequest.getUsername());
+                    byUserName.setUsername(userRequest.getUsername());
                 } else {
                     log.info("User name not available to update");
                     throw new UserException("Username already exist, and cannot update it.");
                 }
             } else log.info("Existed username is same as you provided now : {}", userRequest.getUsername());
         }
-        if (userRequest.getPassword() != null) userById.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        return Utilities.convertToUserResponse(userRepository.save(userById));
+        if (userRequest.getPassword() != null) byUserName.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        return Utilities.convertToUserResponse(userRepository.save(byUserName));
     }
 
     @Override

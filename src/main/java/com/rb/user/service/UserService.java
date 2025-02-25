@@ -8,7 +8,7 @@ import com.rb.user.entity.User;
 public interface UserService {
     UserResponse saveUser(UserRequest request);
     User findByUserName(String id);
-    UserResponse updateUser(String userId, UserRequest userRequest);
+    UserResponse updateUser(String userName, UserRequest userRequest);
     User searchUserByUsername(String userName);
     OTP generateOTP(String email);
     Boolean validateOtp(String belongsTo,Integer otp);
