@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Value("${email.subject.text}")
     private String subjectText;
+    @Value("${OTP-Expiration-Minutes}")
+    private Integer otpExpirationInMinutes;
 
     @Override
     public UserResponse saveUser(UserRequest request) {
@@ -106,7 +108,7 @@ public class UserServiceImpl implements UserService {
             final OTP otpObject = new OTP();
             otpObject.setOtp(otp);
             otpObject.setBelongsTo(email);
-            otpObject.setExpiresAt(System.currentTimeMillis() + (5 * 60000));
+            otpObject.setExpiresAt(System.currentTimeMillis() + (otpExpirationInMinutes * 60000));
             otpRepository.save(otpObject);
             notificationClient.sendEmail(email, "Your OTP is : " + otp, subjectText);
             return otpObject;
