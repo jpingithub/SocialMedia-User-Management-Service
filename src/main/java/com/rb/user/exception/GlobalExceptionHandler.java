@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         exceptionResponse.setPath(request.getDescription(false));
         exceptionResponse.setTimeStamp(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now()));
         exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NO_CONTENT);
     }
 
 }
