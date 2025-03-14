@@ -6,17 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity(name = "users")
+@Entity(name = "temp_otps")
 @Data
-public class User {
-
+public class OTP {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private String email;
-    private Boolean isEmailVerified;
+    private Integer otp;
+    private String belongsTo;
+    private Long expiresAt;
 }
