@@ -16,6 +16,7 @@ public class Utilities {
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
         userResponse.setEmail(user.getEmail());
+        userResponse.setProfileImageUrl(user.getProfileImageUrl());
         return userResponse;
     }
 

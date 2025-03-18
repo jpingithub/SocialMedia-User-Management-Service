@@ -73,6 +73,8 @@ public class UserServiceImpl implements UserService {
             byUserName.setFirstName(userRequest.getFirstName());
         if (userRequest.getLastName() != null && !userRequest.getLastName().equals(byUserName.getLastName()))
             byUserName.setLastName(userRequest.getLastName());
+        if(userRequest.getProfileImageUrl() != null && !userRequest.getProfileImageUrl().equals(byUserName.getProfileImageUrl()))
+            byUserName.setProfileImageUrl(userRequest.getProfileImageUrl());
         if (userRequest.getUsername() != null) {
             log.info("checking new username availability : {}", userRequest.getUsername());
             if (!userRequest.getUsername().equals(byUserName.getUsername())) {

@@ -1,9 +1,6 @@
 package com.rb.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity(name = "users")
@@ -18,5 +15,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    @Column(length = 100000)
+    private String profileImageUrl;
     private Boolean isEmailVerified;
 }
